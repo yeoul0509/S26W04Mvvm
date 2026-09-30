@@ -20,12 +20,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun Counter(
     modifier: Modifier = Modifier,
     count: Int,
-    onChangeCount: (Int) -> Unit,
+    onIncrement: () -> Unit,
+    onDecrement: () -> Unit,
+    onReset: () -> Unit,
 ) {
     // 주석 처리 var count by rememberSaveable { mutableIntStateOf(0) }
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -53,7 +56,7 @@ fun Counter(
             Button(
                 modifier = Modifier.weight(1f),
                 onClick = {
-                    onChangeCount(count + 1)
+                    onIncrement()
                 }
             ) {
                 Text("+", fontSize = 30.sp)
@@ -62,7 +65,7 @@ fun Counter(
             if (expanded) {
                 Button(
                     onClick = {
-                        onChangeCount(count - 1)
+                        onDecrement()
                         expanded = false
                     }
                 ) {
@@ -71,7 +74,7 @@ fun Counter(
 
                 Button(
                     onClick = {
-                        onChangeCount(0)
+                        onReset()
                         expanded = false
                     }
                 ) {
